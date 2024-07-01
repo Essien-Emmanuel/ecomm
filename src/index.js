@@ -1,4 +1,7 @@
 const app = require('express')();
+const bodyParser = require('body-parser');
+
+app.use(bodyParser.urlencoded({ extended: true}));
 
 app.get('/', (req, res) => {
   res.send(`
@@ -13,25 +16,13 @@ app.get('/', (req, res) => {
     `);
 });
 
-function parseReqBody(reqBody) {
-  const parsed = reqBody.split('&');
-  const formData = {};
-  for (const pair of parsed) {
-    const [key, value ] = pair.split('=');
-    formData[key] = value
-  }
-  return formData
-}
+
 
 app.post('/', (req, res) => {
-  req.on('data', (data) => {
-    const stringifiedDataBuffer = data.toString('utf8');
-    const parsedReqBody = parseReqBody(stringifiedDataBuffer);
-    console.log('parsed body ', parsedReqBody)
-  })
+  console.log('form data retrieved ', req.body);
   res.send('Account created!!!');
-})
+});
 
 app.listen(3050, () => {
   console.log('server running at port 3050');
-})
+});
