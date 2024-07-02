@@ -7,46 +7,7 @@
   {
     "email": "test@gmail.com",
     "password": "password123",
-    "id": "4845d1d6fca05ced8c387270"
-  },
-  {
-    "email": "test@gmail.com",
-    "password": "password123",
-    "id": "6b0e914f2f29f2d93b49cf02"
-  },
-  {
-    "email": "test@gmail.com",
-    "password": "password123",
-    "id": "f0c235c175f7a8af77cfb4a6"
-  },
-  {
-    "email": "test@gmail.com",
-    "password": "password123",
-    "id": "aaed34f2e6dcb16a1a139b3d"
-  },
-  {
-    "email": "test@gmail.com",
-    "password": "password123",
-    "id": "9fc610b65534f42aee9ef865"
-  },
-  {
-    "email": "test@gmail.com",
-    "password": "password123",
-    "id": "4e7d3ac5227b18d3f9cee3e2"
-  },
-  {
-    "email": "test@gmail.com",
-    "password": "password123",
-    "id": "5e207c58ac28919f9e4683c3"
-  },
-  {
-    "email": "test@gmail.com",
-    "password": "password123",
-    "id": "490fa768634913caefcff4d8"
-  },
-  {
-    "email": "test@gmail.com",
-    "password": "password123",
-    "id": "7f1a89b6df4503937dfe855a"
+    "id": "4845d1d6fca05ced8c387270",
+    "updated": true
   }
 ]
