@@ -37,6 +37,12 @@ class UserRepository {
     return attrs;
   }
 
+  async delete(id) {
+    const records = await this.getAll();
+    const filteredRecords = records.filter((record) => record.id !== id);
+    await this.writeAll(filteredRecords);
+  }
+
   async writeAll(records) {
     await fs.promises.writeFile(
       this.filename,
@@ -55,7 +61,7 @@ const test = async () => {
   //     email: "test@gmail.com",
   //     password: "password123",
   //   });
-  const user = await repo.getOne("832334960356fc2f969e1f39");
+  const user = await repo.delete("832334960356fc2f969e1f39");
   console.log(user);
 };
 test();
