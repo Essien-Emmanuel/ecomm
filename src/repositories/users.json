@@ -2,6 +2,7 @@
   {
     "email": "test@gmail.com",
     "password": "password123",
+    "isFound": true,
     "id": "832334960356fc2f969e1f39"
   },
   {

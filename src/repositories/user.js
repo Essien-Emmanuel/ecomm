@@ -21,6 +21,12 @@ class UserRepository {
     return JSON.parse(content);
   }
 
+  async getOne(id) {
+    const records = await this.getAll();
+    const record = records.find((record) => record.id === id);
+    return record;
+  }
+
   async create(attrs) {
     attrs.id = this.randomId();
 
@@ -45,10 +51,11 @@ class UserRepository {
 
 const test = async () => {
   const repo = new UserRepository("src/repositories/users.json");
-  const user = await repo.create({
-    email: "test@gmail.com",
-    password: "password123",
-  });
+  //   const user = await repo.create({
+  //     email: "test@gmail.com",
+  //     password: "password123",
+  //   });
+  const user = await repo.getOne("832334960356fc2f969e1f39");
   console.log(user);
 };
 test();
