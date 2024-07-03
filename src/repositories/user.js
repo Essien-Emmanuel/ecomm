@@ -81,16 +81,4 @@ class UserRepository {
   }
 }
 
-const test = async () => {
-  const repo = new UserRepository("src/repositories/users.json");
-  //   const user = await repo.create({
-  //     email: "test@gmail.com",
-  //     password: "password123",
-  //   });
-  const user = await repo.getOneBy({
-    email: "test@gmail.com",
-    password: "password124",
-  });
-  console.log(user);
-};
-test();
+module.exports = new UserRepository("src/dataStore/users.json");
