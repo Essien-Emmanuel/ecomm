@@ -27,6 +27,22 @@ class UserRepository {
     return record;
   }
 
+  async getOneBy(filters) {
+    const records = await this.getAll();
+
+    for (const record of records) {
+      let found = true;
+
+      for (const field in filters) {
+        if (record[field] !== filters[field]) {
+          found = false;
+        }
+      }
+
+      if (found) return record;
+    }
+  }
+
   async create(attrs) {
     attrs.id = this.randomId();
 
@@ -71,7 +87,10 @@ const test = async () => {
   //     email: "test@gmail.com",
   //     password: "password123",
   //   });
-  const user = await repo.update("4845d1d6fca05ced8c387270", { updated: true });
+  const user = await repo.getOneBy({
+    email: "test@gmail.com",
+    password: "password124",
+  });
   console.log(user);
 };
 test();
