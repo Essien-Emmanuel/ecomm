@@ -1,5 +1,7 @@
 [
-    {
-        "email": "test@test.com"
-    }
+  {
+    "email": "test@test.com",
+    "password": "f888b6db6346acf2edecac3ab2cdc796dd181ab872beba15fa35c4f372b27d82ada5cb60d5bbf1be1e76cbb6cf3e9ae0272faa45478c102055e75a55e08456ae.48142175ee0f59d4",
+    "id": "d46c8e12ef4c40161af89a41"
+  }
 ]
