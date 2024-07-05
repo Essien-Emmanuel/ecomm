@@ -41,6 +41,31 @@ app.post("/signup", async (req, res) => {
   res.send("Account created!!!");
 });
 
+app.get("/signin", (req, res) => {
+  res.send(`
+      <div>
+        <form method="POST">
+          <input name="email" placeholder="email" />
+          <input name="password" placeholder="password" />
+          <button>Sign In</button>
+        </form>
+      </div>
+    `);
+});
+
+app.post("/signin", async (req, res, next) => {
+  const { email, password } = req.body;
+
+  const user = await UserRepo.getOneBy({ email });
+  if (!user) return res.send("User not found.");
+
+  if (password !== user.password) return res.send("Incorrect password");
+
+  req.session.userId = user.id;
+
+  return res.send("User logged in successfully.");
+});
+
 app.get("/signout", (req, res, next) => {
   req.session = null;
   return res.send("You are logged out.");
