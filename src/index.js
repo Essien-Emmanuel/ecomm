@@ -1,6 +1,8 @@
 const app = require("express")();
 const bodyParser = require("body-parser");
 const cookieSession = require("cookie-session");
+
+const ncrypt = require("./libs/ncrypt");
 const UserRepo = require("./repositories/user");
 
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -35,7 +37,9 @@ app.post("/signup", async (req, res) => {
 
   if (confirmPassword !== password) return res.send("Passwords must match.");
 
-  const user = await UserRepo.create({ email, password });
+  const hashedPassword = await ncrypt.hash(password);
+
+  const user = await UserRepo.create({ email, password: hashedPassword });
   req.session.userId = user.id;
 
   res.send("Account created!!!");
@@ -59,7 +63,8 @@ app.post("/signin", async (req, res, next) => {
   const user = await UserRepo.getOneBy({ email });
   if (!user) return res.send("User not found.");
 
-  if (password !== user.password) return res.send("Incorrect password");
+  const isPassword = await ncrypt.compare(password, user.password);
+  if (!isPassword) return res.send("Incorrect password");
 
   req.session.userId = user.id;
 
