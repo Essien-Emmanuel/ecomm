@@ -41,6 +41,11 @@ app.post("/signup", async (req, res) => {
   res.send("Account created!!!");
 });
 
+app.get("/signout", (req, res, next) => {
+  req.session = null;
+  return res.send("You are logged out.");
+});
+
 app.listen(3050, () => {
   console.log("server running at port 3050");
 });
