@@ -1,5 +1,5 @@
 module.exports = {
-  getError() {
+  getError(errors, prop) {
     try {
       return errors.mapped()[prop].msg;
     } catch (error) {
