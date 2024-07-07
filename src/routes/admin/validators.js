@@ -1,8 +1,10 @@
-const { check } = require("express-validator");
+const { check, validationResult } = require("express-validator");
 const UserRepo = require("../../repositories/user");
 const ncrypt = require("../../libs/ncrypt");
 
 module.exports = {
+  requireTitle: check("title").trim().isLength({ min: 5, max: 40 }),
+  requirePrice: check("price").trim().toFloat().isFloat({ min: 1 }),
   requireEmail: check("email")
     .trim()
     .normalizeEmail()
@@ -16,15 +18,17 @@ module.exports = {
   requirePassword: check("password")
     .trim()
     .isLength({ min: 4, max: 20 })
-    .withMessage("Password must be min of 4 and max 6 length"),
+    .withMessage("Must be between 4 to 20 characters"),
 
   requireConfirmPassword: check("confirmPassword")
     .trim()
     .isLength({ min: 4, max: 20 })
-    .withMessage("confirm password must be min of 4 and max of 20 in length")
+    .withMessage("Must be between 4 to 20 characters")
     .custom((confirmPassword, { req }) => {
       if (confirmPassword !== req.body.password)
         throw new Error("Passwords must match");
+      console.log("here");
+      console.log("chain ", validationResult(req));
     }),
 
   requireEmailExists: check("email")

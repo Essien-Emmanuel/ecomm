@@ -1,6 +1,7 @@
 const router = require("express").Router();
 const { check, validationResult } = require("express-validator");
 
+const ncrypt = require("../../libs/ncrypt");
 const UserRepo = require("../../repositories/user");
 const signupTemplate = require("../../views/admin/auth/signup");
 const signinTemplate = require("../../views/admin/auth/signin");
@@ -18,12 +19,40 @@ router.get("/signup", (req, res) => {
 
 router.post(
   "/signup",
-  [requireEmail, requirePassword, requireConfirmPassword],
+  [
+    requireEmail,
+    requirePassword,
+    check("confirmPassword")
+      .trim()
+      .isLength({ min: 4, max: 20 })
+      .withMessage("Must be between 4 to 20 characters long"),
+  ],
   async (req, res) => {
-    const { email, password } = req.body;
+    const { email, password, confirmPassword } = req.body;
 
     const errors = validationResult(req);
-    if (!errors.isEmpty()) return res.send(signupTemplate({ req, errors }));
+
+    if (confirmPassword !== password) {
+      const confirmPasswordErrorObj = {
+        type: "field",
+        value: confirmPassword,
+        msg: "passwords must match",
+        path: "confirmPassword",
+        location: "body",
+      };
+      if (errors.errors.length < 1) {
+        errors.errors.push(confirmPasswordErrorObj);
+      } else {
+        for (const error of errors.errors) {
+          if (error.path !== "confirmPassword") {
+            errors.errors.push(confirmPasswordErrorObj);
+            break;
+          }
+        }
+      }
+    }
+
+    if (!errors.isEmpty()) return res.send(signupTemplate({ errors }));
 
     const hashedPassword = await ncrypt.hash(password);
 
