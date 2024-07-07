@@ -10,10 +10,10 @@ const { confirmPasswordValidator } = require("../../middleware/index");
 const {
   requireEmail,
   requirePassword,
-  requireConfirmPassword,
   requireEmailExists,
   requireValidPassword,
 } = require("./validators");
+const { handleError } = require("./middlewares");
 
 router.get("/signup", (req, res) => {
   res.send(signupTemplate({ req }));
@@ -51,11 +51,9 @@ router.get("/signin", (_req, res) => {
 router.post(
   "/signin",
   [requireEmailExists, requireValidPassword],
+  handleError(signinTemplate),
   async (req, res, _next) => {
     const { email } = req.body;
-
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) return res.send(signinTemplate({ errors }));
 
     const user = await UserRepo.getOneBy({ email });
     req.session.userId = user.id;
