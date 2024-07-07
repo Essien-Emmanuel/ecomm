@@ -5,6 +5,8 @@ const ncrypt = require("../../libs/ncrypt");
 const UserRepo = require("../../repositories/user");
 const signupTemplate = require("../../views/admin/auth/signup");
 const signinTemplate = require("../../views/admin/auth/signin");
+const { confirmPasswordValidator } = require("../../middleware/index");
+
 const {
   requireEmail,
   requirePassword,
@@ -28,29 +30,8 @@ router.post(
       .withMessage("Must be between 4 to 20 characters long"),
   ],
   async (req, res) => {
-    const { email, password, confirmPassword } = req.body;
-
-    const errors = validationResult(req);
-
-    if (confirmPassword !== password) {
-      const confirmPasswordErrorObj = {
-        type: "field",
-        value: confirmPassword,
-        msg: "passwords must match",
-        path: "confirmPassword",
-        location: "body",
-      };
-      if (errors.errors.length < 1) {
-        errors.errors.push(confirmPasswordErrorObj);
-      } else {
-        for (const error of errors.errors) {
-          if (error.path !== "confirmPassword") {
-            errors.errors.push(confirmPasswordErrorObj);
-            break;
-          }
-        }
-      }
-    }
+    const { email, password } = req.body;
+    const errors = confirmPasswordValidator(req);
 
     if (!errors.isEmpty()) return res.send(signupTemplate({ errors }));
 
