@@ -6,6 +6,7 @@ const cookieSession = require("cookie-session");
 const authRouter = require("./routes/admin/auth");
 const adminProductRouter = require("./routes/admin/product");
 const userProductRouter = require("./routes/user/product");
+const userCartRouter = require("./routes/user/cart");
 
 const app = express();
 
@@ -20,6 +21,7 @@ app.use(
 app.use(authRouter);
 app.use(adminProductRouter);
 app.use(userProductRouter);
+app.use(userCartRouter);
 
 app.listen(3050, () => {
   console.log("server running at port 3050");

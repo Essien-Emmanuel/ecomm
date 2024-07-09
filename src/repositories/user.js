@@ -6,4 +6,4 @@ class UserRepository extends Repository {
   }
 }
 
-module.exports = new UserRepository("src/dataStore/users.json");
+module.exports = new UserRepository("src/dataStore/Users.json");
