@@ -6,4 +6,4 @@ class ProductRepository extends Repository {
   }
 }
 
-module.exports = new ProductRepository("src/dataStore/products.json");
+module.exports = new ProductRepository("src/dataStore/Products.json");
